@@ -1,0 +1,48 @@
+{
+    "type": "PyTorchModel",
+    "config": {
+        "model_path": null,
+        "script_dir": null,
+        "model_script": "/mnt/d/Users/juanp_schamun/Documents/GitRepositories/IA/llama/mytestproject/ftproject/finetuning/qlora_user_script.py",
+        "adapter_path": "/mnt/d/Users/juanp_schamun/Documents/GitRepositories/IA/llama/mytestproject/ftproject/cache/models/0_QLoRA-89594c9a-7f5a2b0f/output_model/adapter",
+        "model_file_format": "PyTorch.EntireModel",
+        "model_loader": null,
+        "dummy_inputs_func": "get_merged_decoder_with_past_dummy_inputs",
+        "hf_config": {
+            "model_name": "microsoft/Phi-3-mini-4k-instruct",
+            "task": "text-generation",
+            "feature": null,
+            "model_class": null,
+            "components": null,
+            "from_pretrained_args": {
+                "extra_args": null,
+                "torch_dtype": "bfloat16",
+                "device_map": null,
+                "max_memory": null,
+                "quantization_method": "bitsandbytes",
+                "quantization_config": {
+                    "llm_int8_threshold": 6.0,
+                    "llm_int8_skip_modules": null,
+                    "llm_int8_enable_fp32_cpu_offload": false,
+                    "llm_int8_has_fp16_weight": false,
+                    "bnb_4bit_quant_type": "nf4",
+                    "bnb_4bit_use_double_quant": true,
+                    "bnb_4bit_compute_dtype": "bfloat16",
+                    "bnb_4bit_quant_storage": "uint8",
+                    "load_in_4bit": true,
+                    "load_in_8bit": false
+                },
+                "trust_remote_code": true
+            }
+        },
+        "model_attributes": {
+            "quantized_modules": [
+                "qkv_proj",
+                "o_proj",
+                "gate_up_proj",
+                "down_proj"
+            ]
+        },
+        "io_config": "get_merged_decoder_with_past_io_config"
+    }
+}

@@ -1,0 +1,13 @@
+langchain
+langchain_community
+langchain_chroma
+langchain_ollama
+
+langchain-openai
+langchainhub
+langchain-anthropic
+
+beautifulsoup4
+umap-learn
+scikit-learn
+tiktoken

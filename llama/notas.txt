@@ -1,0 +1,134 @@
+Instalacion Llama 3 on premise
+
+
+https://trainmy.ai/install-demo/
+	Best performance: NVIDIA GPU with 12+ GB of RAM and CUDA 7.5+ (see table), e.g. NVIDIA RTX 3060 12GB.
+	
+Hugging Face
+
+
+
+https://www.datacamp.com/tutorial/run-llama-3-locally
+	GPT4ALL
+	OLLAMA
+	CHROMA
+	
+
+
+To deploy an LLaMA-3 model on-site, you'll need:
+
+1. A powerful machine with at least 32 GB of RAM and multiple CPU cores.
+2. A suitable operating system (e.g., Linux or Windows).
+3. Adequate storage space for the model's weights (~10 GB) and any additional data.
+
+If you're interested in deploying an LLaMA-3 model, I can provide more information on how to do so. Please let me know if you have any specific requirements or constraints!
+Prompt: more info
+Response: Here are the general steps for deploying a pre-trained LLaMA-3 model:
+
+**Step 1:** Download the pre-trained LLaMA-3 weights (~10 GB) from Hugging Face's Transformers library. You can use their official repository or a mirror site.
+
+**Step 2:** Install the necessary dependencies, including:
+	* Python (e.g., version 3.8+)
+	* PyTorch (version 1.9+ for LLaMA-3)
+	* Hugging Face's Transformers library
+	* Optional: GPU support with CUDA or ROCm
+
+**Step 3:** Load the pre-trained model weights into your Python environment using the `transformers` library.
+
+```python
+import torch
+from transformers import LLamaForSequenceClassification, LLaMATokenizer
+
+# Load the pre-trained model and tokenizer:
+model = LLamaForSequenceClassification.from_pretrained('llama-3-base')
+tokenizer = LLaMATokenizer.from_pretrained('llama-3-base')
+
+```
+
+**Step 4:** Prepare your dataset for fine-tuning or inference. This may involve tokenizing text data, creating datasets, and splitting them into training and evaluation sets.
+
+**Step 5:** Fine-tune the pre-trained model on your specific task using a suitable optimizer (e.g., AdamW) and learning rate scheduler.
+
+```python
+# Define your custom dataset class:
+class MyDataset(torch.utils.data.Dataset):
+    def __init__(self, texts, labels):
+        self.texts = texts
+        self.labels = labels
+
+    def __len__(self):
+        return len(self.texts)
+
+    def __getitem__(self, idx):
+        text = self.texts[idx]
+        label = self.labels[idx]
+
+        encoding = tokenizer.encode_plus(
+            text,
+            add_special_tokens=True,
+            max_length=512,
+            padding='max_length',
+            truncation=True,
+            return_attention_mask=True,
+            return_tensors='pt'
+        )
+
+        return {
+            'input_ids': encoding['input_ids'].flatten(),
+            'attention_mask': encoding['attention_mask'].flatten(),
+            'labels': torch.tensor(label, dtype=torch.long)
+        }
+
+# Create a data loader for your dataset:
+dataset = MyDataset(texts, labels)
+data_loader = torch.utils.data.DataLoader(dataset, batch_size=32, shuffle=True)
+
+```
+
+**Step 6:** Train or evaluate the fine-tuned model using the `train` and `evaluate` methods.
+
+```python
+ Define your custom training loop:
+def train(model, device, data_loader):
+    model.train()
+    total_loss = 0
+
+    for batch in data_loader:
+        input_ids = batch['input_ids'].to(device)
+        attention_mask = batch['attention_mask'].to(device)
+        labels = batch['labels'].to(device)
+
+        optimizer.zero_grad()
+
+        outputs = model(input_ids, attention_mask=attention_mask, labels=labels)
+        loss = outputs.loss
+
+        loss.backward()
+        optimizer.step()
+        total_loss += loss.item()
+
+    return total_loss / len(data_loader)
+
+```
+
+**Step 7:** Deploy the fine-tuned model in your desired environment (e.g., a web application or mobile app).
+
+Please note that this is just an overview of the general steps. You may need to modify these instructions based on specific requirements, such as handling edge cases or integrating with existing infrastructure.
+
+If you have any further questions about deploying LLaMA-3 or would like more detailed information on each step, feel free to ask! I'm here to help.
+
+
+Alternativas a CHAT-GPT
+https://www.datacamp.com/blog/12-gpt4-open-source-alternatives
+	1. ColossalChat
+	2. Alpaca-LoRA
+	3. Vicuna
+	4. GPT4ALL
+	5. Raven RWKV
+	6. OpenChatKit
+	7. OPT
+	8. Flan-T5-XXL
+	9. Baize
+	10. Koala
+	11. Dolly
+	12. Open Assistant

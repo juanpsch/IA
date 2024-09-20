@@ -1,0 +1,26 @@
+services:
+  chatgpt:
+    image: ghcr.io/ivanfioravanti/chatbot-ollama:main
+    ports:
+      - 3000:3000
+    environment:
+      - DEFAULT_MODEL=llama3
+      - OLLAMA_HOST=http://ollama:11434
+  ollama:      
+    image: ollama/ollama:latest
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            capabilities: ["gpu"]
+            count: all
+
+    volumes:
+      - ./ollama/models:/ollama/models
+    environment:
+      - OLLAMA_MODELS=/ollama/models      
+
+# La version actual de chatbot-ollama no descarga el modelo automaticamente
+# Vas a tener que correr este comando cada vez que necesites un modelo nuevo:
+# docker-compose exec ollama ollama pull llama2

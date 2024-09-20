@@ -1,0 +1,25 @@
+name: cv1
+channels:
+  - defaults
+dependencies:
+  - python=3.12.2
+  - opencv
+  - matplotlib
+  - numpy
+  - ipykernel
+  - scipy
+  - scikit-image
+  - pandas
+  - sympy
+  - torchmetrics
+  - pytorch
+  - pytorch-cuda=12.1
+  - torchaudio
+  - torchvision
+  - tensorboard
+  - chardet
+  - nbconvert
+  - jupyter_client[version='<8']
+  - notebook
+  - pyzmq[version='<25']
+prefix: D:\Users\juanp_schamun\AppData\Local\anaconda3\envs\cv1

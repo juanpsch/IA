@@ -1,0 +1,136 @@
+{
+    "pass_name": "QLoRA",
+    "pass_config": {
+        "double_quant": true,
+        "quant_type": "nf4",
+        "compute_dtype": "bfloat16",
+        "use_ort_trainer": false,
+        "ortmodule_onnx_opset_version": 16,
+        "lora_r": 32,
+        "lora_alpha": 64.0,
+        "lora_dropout": 0.1,
+        "bias": "none",
+        "modules_to_save": null,
+        "torch_dtype": "bfloat16",
+        "allow_tf32": true,
+        "train_data_config": {
+            "name": "dataset_default_train",
+            "type": "HuggingfaceContainer",
+            "params_config": {
+                "data_name": "json",
+                "data_files": "dataset/dataset-classification.json",
+                "split": "train",
+                "model_name": "microsoft/Phi-3-mini-4k-instruct",
+                "task": "text-generation",
+                "trust_remote_code": true
+            },
+            "user_script": "/mnt/d/Users/juanp_schamun/Documents/GitRepositories/IA/llama/mytestproject/ftproject/finetuning/qlora_user_script.py",
+            "script_dir": null,
+            "components": {
+                "load_dataset": {
+                    "name": "huggingface_dataset",
+                    "type": "huggingface_dataset",
+                    "params": {
+                        "data_dir": null,
+                        "data_name": "json",
+                        "subset": null,
+                        "split": "train",
+                        "data_files": "dataset/dataset-classification.json"
+                    }
+                },
+                "pre_process_data": {
+                    "name": "text_generation_huggingface_pre_process",
+                    "type": "text_generation_huggingface_pre_process",
+                    "params": {
+                        "dataset_type": "corpus",
+                        "text_cols": [
+                            "phrase",
+                            "tone"
+                        ],
+                        "text_template": "### Text: {phrase}\n### The tone is:\n{tone}",
+                        "corpus_strategy": "join",
+                        "source_max_len": 1024,
+                        "pad_to_max_len": false,
+                        "use_attention_mask": false,
+                        "model_name": "microsoft/Phi-3-mini-4k-instruct",
+                        "max_samples": null,
+                        "trust_remote_code": true
+                    }
+                },
+                "post_process_data": {
+                    "name": "text_generation_post_process",
+                    "type": "text_generation_post_process",
+                    "params": {}
+                },
+                "dataloader": {
+                    "name": "default_dataloader",
+                    "type": "default_dataloader",
+                    "params": {
+                        "batch_size": 1
+                    }
+                }
+            },
+            "default_components": {
+                "load_dataset": {
+                    "name": "huggingface_dataset",
+                    "type": "huggingface_dataset",
+                    "params": {}
+                },
+                "pre_process_data": {
+                    "name": "text_generation_huggingface_pre_process",
+                    "type": "text_generation_huggingface_pre_process",
+                    "params": {}
+                },
+                "post_process_data": {
+                    "name": "text_generation_post_process",
+                    "type": "text_generation_post_process",
+                    "params": {}
+                },
+                "dataloader": {
+                    "name": "default_dataloader",
+                    "type": "default_dataloader",
+                    "params": {}
+                }
+            },
+            "default_components_type": {
+                "load_dataset": "huggingface_dataset",
+                "pre_process_data": "text_generation_huggingface_pre_process",
+                "post_process_data": "text_generation_post_process",
+                "dataloader": "default_dataloader"
+            }
+        },
+        "eval_data_config": null,
+        "eval_dataset_size": 0.3,
+        "training_args": {
+            "extra_args": {
+                "num_train_epochs": 1,
+                "adam_beta2": 0.999,
+                "max_grad_norm": 0.3
+            },
+            "seed": 0,
+            "data_seed": 42,
+            "optim": "paged_adamw_32bit",
+            "per_device_train_batch_size": 1,
+            "per_device_eval_batch_size": 1,
+            "gradient_accumulation_steps": 4,
+            "max_steps": 1875,
+            "weight_decay": 0.0,
+            "learning_rate": 0.0002,
+            "gradient_checkpointing": true,
+            "lr_scheduler_type": "constant",
+            "warmup_ratio": 0.03,
+            "logging_steps": 10,
+            "evaluation_strategy": "steps",
+            "eval_steps": 187.0,
+            "group_by_length": true,
+            "report_to": "none",
+            "output_dir": "models/checkpoints",
+            "overwrite_output_dir": false,
+            "resume_from_checkpoint": null
+        }
+    },
+    "input_model_id": "89594c9a",
+    "output_model_id": "0_QLoRA-89594c9a-7f5a2b0f",
+    "run_start_time": 1719600528.183349,
+    "run_end_time": 1719612655.119566
+}
